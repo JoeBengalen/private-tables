@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "tableId": 1,
+    "name": "id",
+    "type": "INTEGER",
+    "length": null,
+    "allowNull": false,
+    "default": null,
+    "comment": null,
+    "isPrimaryKey": false,
+    "autoIncrement": false
+}

@@ -1,0 +1,57 @@
+{
+    "$schema": "http: \/\/json-schema.org\/draft-04\/schema#",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "integer"
+        },
+        "tableId": {
+            "type": "integer"
+        },
+        "name": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string"
+        },
+        "length": {
+            "type": [
+                "integer",
+                "null"
+            ]
+        },
+        "allowNull": {
+            "type": "boolean"
+        },
+        "default": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "comment": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "isPrimaryKey": {
+            "type": "boolean"
+        },
+        "autoIncrement": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "id",
+        "tableId",
+        "name",
+        "type",
+        "length",
+        "allowNull",
+        "default",
+        "comment",
+        "isPrimaryKey",
+        "autoIncrement"
+    ]
+}

@@ -1,0 +1,137 @@
+#%RAML 1.0
+---
+title: Tables API
+version: v1
+baseUri: http://admin:Admin!23@localhost:8000/api/{version}/
+securitySchemes:
+  - basic:
+      type: Basic Authentication
+      description: HTTP Basic Authentication
+
+schemas:
+ - error: !include schema/error.json
+ - table: !include schema/table.json
+ - tables: !include schema/tables.json
+ - table-badrequest: !include schema/table-badrequest.json
+ - table-conflict: !include schema/table-conflict.json
+ - field: !include schema/field.json
+ - fields: !include schema/fields.json
+ - field-badrequest: !include schema/field-badrequest.json
+ - field-conflict: !include schema/field-conflict.json
+
+resourceTypes:
+  - collection:
+      get:
+        description: Get a list of <<resourcePathName>>.
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<resourcePathName>>
+                example: <<collection>>
+      post:
+        description: Add a new <<resourcePathName|!singularize>>.
+        body:
+          application/json:
+            schema: <<resourcePathName|!singularize>>
+            examples: 
+              - <<createItem>>
+              - "{}"
+              - <<conflictItem>>
+        responses:
+          201:
+            headers:
+              location:
+                description: Location of the created <<resourcePathName|!singularize>>
+                type: string
+                required: true
+                example: /<<resourcePathName>>/123
+            body: null
+          400:
+            body:
+              application/json:
+                schema: <<resourcePathName|!singularize>>-badrequest
+          409:
+            body:
+              application/json:
+                schema: <<resourcePathName|!singularize>>-conflict
+        
+  - item:
+      get:
+        description: |
+          Get a <<resourcePathName|!singularize>>
+          by its <<resourcePathName|!singularize>>Id
+        responses:
+          200:
+            body:
+              application/json:
+                schema: <<resourcePathName|!singularize>>
+                example: <<item>>
+          404:
+            body:
+              application/json:
+                schema: error
+      put:
+        description: |
+          Update a <<resourcePathName|!singularize>>
+          by its <<resourcePathName|!singularize>>Id
+        body:
+          application/json:
+            schema: <<resourcePathName|!singularize>>
+            examples: 
+              - <<updateItem>>
+              - "{}"
+              - <<conflictItem>>
+              - <<updateItem>>
+        responses:
+          204:
+            body: null
+          400:
+            body:
+              application/json:
+                schema: <<resourcePathName|!singularize>>-badrequest
+          409:
+            body:
+              application/json:
+                schema: <<resourcePathName|!singularize>>-conflict
+          404:
+            body:
+              application/json:
+                schema: error
+      delete:
+        description: |
+          Delete a <<resourcePathName|!singularize>>
+          by its <<resourcePathName|!singularize>>Id
+        responses:
+          204:
+            body: null
+          404:
+            body:
+              application/json:
+                schema: error
+
+
+/tables:
+  securedBy: [ basic ]
+  type:
+    collection:
+      collection: !include sample/tables.json
+      createItem: !include sample/table-create.json
+      conflictItem: !include sample/table-conflict.json
+  /{tableId}:
+    securedBy: [ basic ]
+    uriParameters:
+      tableId:
+        type: integer
+        examples: [ 1, 99999, 2 ]
+    type:
+      item:
+        item: !include sample/table.json
+        updateItem: !include sample/table-update.json
+        conflictItem: !include sample/table-conflict.json
+    /fields:
+      type:
+        collection:
+          collection: !include sample/fields.json
+          createItem: !include sample/field-create.json
+          conflictItem: !include sample/field-conflict.json
