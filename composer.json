@@ -1,0 +1,46 @@
+{
+    "name": "joebengalen/tables",
+    "type": "application",
+    "license": "MIT",
+    "keywords": [],
+    "description": "",
+    "authors": [
+        {
+            "name": "Martijn Wennink",
+            "email": "joebengalen@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^5.5",
+        "php-di/php-di": "^5.2",
+        "php-di/slim-bridge": "^1.0",
+        "joebengalen/assert": "^1.0",
+        "aura/filter": "^2.2",
+        "aura/sql": "^2.4",
+        "robmorgan/phinx": "^0.5.3"
+    },
+    "require-dev": {
+        "alecsammon/php-raml-parser": "dev-master",
+        "guzzlehttp/guzzle": "^6.2",
+        "phpunit/phpunit": "^5.3",
+        "justinrainbow/json-schema": "^1.6",
+        "memio/memio": "^1.1",
+        "phpunit/phpunit-selenium": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JoeBengalen\\Tables\\": "src",
+            "JoeBengalen\\HttpRest\\": "vendorjb/HttpRest",
+            "JoeBengalen\\HttpAuthentication\\": "vendorjb/HttpAuthentication",
+            "JoeBengalen\\SlimCompress\\": "vendorjb/SlimCompress",
+            "JoeBengalen\\SlimEnvelope\\": "vendorjb/SlimEnvelope",
+            "JoeBengalen\\SlimJsonp\\": "vendorjb/SlimJsonp"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JoeBengalen\\Tables\\Test\\": "phpunit",
+            "JoeBengalen\\RamlApiTester\\": "vendorjb/RamlApiTester"
+        }
+    }
+}

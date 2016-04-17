@@ -1,0 +1,15 @@
+build
+vendor
+nbproject
+composer.lock
+spec
+phpspec.yml
+phpunit.xml
+codeception.yml
+phpspec.yml.dist
+node_modules
+tests
+phpunit
+db/data
+apitest/_coverage
+apitest/_out
