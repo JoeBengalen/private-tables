@@ -1,0 +1,26 @@
+        $request = new Request(
+            '{{ method }}',
+            '{{ uri }}',
+            {{ export(headers)|raw }},
+            {{ export(body)|raw }}
+        );
+
+        $response = $this->client->send($request);
+
+        RequestResponseLogger::logRequestResponse(__FUNCTION__, $request, $response);
+
+        $this->assertSame({{ expectedStatusCode }}, $response->getStatusCode());
+
+        {% if expectedContentType is not empty %}
+        $this->assertContentType(
+            '{{ expectedContentType }}',
+            $response->getHeaderLine('Content-Type')
+        );
+        {% endif %}
+
+        {% if expectedSchema is not empty %}
+        $this->assertJsonMatchesSchema(
+            '{{ expectedSchema|raw }}',
+            (string) $response->getBody()
+        );
+        {% endif %}
