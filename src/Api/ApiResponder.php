@@ -150,8 +150,20 @@ class ApiResponder
     public function error(Response $response, Exception $exception)
     {
         $data = [
-            'error' => (string) $exception,
+            'error' => $exception->getMessage(),
+            'details' => [],
         ];
+
+        do {
+            $data['details'][] = [
+                'type' => get_class($exception),
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => explode("\n", $exception->getTraceAsString()),
+            ];
+        } while ($exception = $exception->getPrevious());
 
         return $response->withJson($data, 500, JSON_PRETTY_PRINT);
     }
