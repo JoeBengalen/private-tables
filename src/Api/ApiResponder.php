@@ -7,6 +7,7 @@ use Exception;
 use InvalidArgumentException;
 use JoeBengalen\Tables\Model\Exception\DuplicateEntity;
 use Slim\Http\Response;
+use Throwable;
 
 class ApiResponder
 {
@@ -164,6 +165,37 @@ class ApiResponder
                 'trace' => explode("\n", $exception->getTraceAsString()),
             ];
         } while ($exception = $exception->getPrevious());
+
+        return $response->withJson($data, 500, JSON_PRETTY_PRINT);
+    }
+
+    /**
+     * Build phpError response.
+     *
+     * @param Response  $response
+     * @param Throwable $error
+     *
+     * @return Response
+     *
+     * @throws InvalidArgumentException
+     */
+    public function phpError(Response $response, Throwable $error)
+    {
+        $data = [
+            'error' => $error->getMessage(),
+            'details' => [],
+        ];
+
+        do {
+            $data['details'][] = [
+                'type' => get_class($error),
+                'code' => $error->getCode(),
+                'message' => $error->getMessage(),
+                'file' => $error->getFile(),
+                'line' => $error->getLine(),
+                'trace' => explode("\n", $error->getTraceAsString()),
+            ];
+        } while ($error = $error->getPrevious());
 
         return $response->withJson($data, 500, JSON_PRETTY_PRINT);
     }

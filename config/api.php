@@ -7,6 +7,7 @@ use JoeBengalen\HttpAuthentication\BasicAuthenticationMiddleware;
 use JoeBengalen\Tables\Api\Action\Error\ErrorAction;
 use JoeBengalen\Tables\Api\Action\Error\NotAllowedAction;
 use JoeBengalen\Tables\Api\Action\Error\NotFoundAction;
+use JoeBengalen\Tables\Api\Action\Error\PhpErrorAction;
 use JoeBengalen\Tables\Api\Filter\FieldFilter;
 use JoeBengalen\Tables\Api\Filter\TableFilter;
 use Slim\Router;
@@ -28,6 +29,7 @@ return [
     'authentication.password' => 'Admin!23',
 
     'errorHandler' =>get(ErrorAction::class),
+    'phpErrorHandler' =>get(PhpErrorAction::class),
     'notFoundHandler' =>get(NotFoundAction::class),
     'notAllowedHandler' =>get(NotAllowedAction::class),
 
