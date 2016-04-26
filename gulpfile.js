@@ -11,8 +11,8 @@ gulp.task('phpunit', ['prepare-test'], shell.task('phpunit --no-coverage'));
 gulp.task('codecept', ['prepare-test'], shell.task('codecept run --no-exit --silent --html'));
 
 gulp.task('prepare-test', ['clean-test'], shell.task([
-    'vendor\\bin\\phinx migrate -e test',
-    'vendor\\bin\\phinx seed:run -e test'
+    'vendor/bin/phinx migrate -e test',
+    'vendor/bin/phinx seed:run -e test'
 ]));
 
 gulp.task('server-coverage', function () {
@@ -32,18 +32,22 @@ gulp.task('server', function () {
 
 gulp.task('apitest-clean', function () {
     return del([
-        './apitest/_out/*',
-        './apitest/_coverage/*',
+        './apitest/_out',
+        './apitest/_coverage',
         './apitest/ApiTest.php'
     ]);
 });
 
-gulp.task('apitest-build', ['apitest-clean'], shell.task('php bin\\build-apitest.php'));
-gulp.task('apitest', ['prepare-test', 'apitest-build'], shell.task('vendor\\bin\\phpunit apitest\\ApiTest.php --colors'));
+gulp.task('apitest-build', ['apitest-clean'], shell.task([
+    'mkdir apitest/_coverage',
+    'mkdir apitest/_out',
+    'php bin/build-apitest.php'
+]));
+gulp.task('apitest', ['prepare-test', 'apitest-build'], shell.task('vendor/bin/phpunit apitest/ApiTest.php --colors'));
 
-gulp.task('initdb', shell.task('vendor\\bin\\phinx migrate'));
+gulp.task('initdb', shell.task('vendor/bin/phinx migrate'));
 
-gulp.task('docs-rest', shell.task('raml2html raml\\api.raml > build\\api.html'));
+gulp.task('docs-rest', shell.task('node_modules/.bin/raml2html raml/api.raml > build/api.html'));
 gulp.task('docs-code', ['clean-docs'], shell.task('apigen generate --template-theme bootstrap --debug'));
 
 gulp.task('clean-test', function () {

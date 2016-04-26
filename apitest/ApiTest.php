@@ -16,7 +16,7 @@ class ApiTest extends PHPUnitTestCase
 
     public function setUp()
     {
-        RequestResponseLogger::setTargetDir('C:\Development\Projects\php\Tables/apitest/_out/');
+        RequestResponseLogger::setTargetDir('/home/martijn/Code/private-tables/apitest/_out/');
 
         $this->client = new Client([
             'http_errors' => false,
@@ -46,7 +46,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"]},"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\tables.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"]},"id":"file:///home/martijn/Code/private-tables/raml/schema/tables.json"}',
             (string) $response->getBody()
         );
         
@@ -60,7 +60,7 @@ class ApiTest extends PHPUnitTestCase
             array (
   'Content-Type' => 'application/json',
 ),
-            '{"name":"newtable","id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\table-create.json"}'
+            '{"name":"newtable","id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/table-create.json"}'
         );
 
         $response = $this->client->send($request);
@@ -94,7 +94,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testAddANewTableConflict()
+    public function testAddANewTableError()
     {
         $request = new Request(
             'POST',
@@ -102,7 +102,7 @@ class ApiTest extends PHPUnitTestCase
             array (
   'Content-Type' => 'application/json',
 ),
-            '{"name":"table2","id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\table-conflict.json"}'
+            '{"name":"table2","id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/table-conflict.json"}'
         );
 
         $response = $this->client->send($request);
@@ -138,7 +138,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"],"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\table.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"id":{"type":"integer"},"name":{"type":"string"}},"required":["id","name"],"id":"file:///home/martijn/Code/private-tables/raml/schema/table.json"}',
             (string) $response->getBody()
         );
         
@@ -167,7 +167,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":"string"}}},"required":["error"],"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\error.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":["string","object"]}}},"required":["error"],"id":"file:///home/martijn/Code/private-tables/raml/schema/error.json"}',
             (string) $response->getBody()
         );
         
@@ -181,7 +181,7 @@ class ApiTest extends PHPUnitTestCase
             array (
   'Content-Type' => 'application/json',
 ),
-            '{"name":"updatedtable","id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\table-update.json"}'
+            '{"name":"updatedtable","id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/table-update.json"}'
         );
 
         $response = $this->client->send($request);
@@ -218,13 +218,13 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"name":{"type":"array","items":{"type":"string"}}},"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\table-badrequest.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"name":{"type":"array","items":{"type":"string"}}},"id":"file:///home/martijn/Code/private-tables/raml/schema/table-badrequest.json"}',
             (string) $response->getBody()
         );
         
     }
 
-    public function testUpdateATableByItsTableIdConflict()
+    public function testUpdateATableByItsTableIdError()
     {
         $request = new Request(
             'PUT',
@@ -233,7 +233,7 @@ class ApiTest extends PHPUnitTestCase
   'Accept' => 'application/json',
   'Content-Type' => 'application/json',
 ),
-            '{"name":"table2","id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\table-conflict.json"}'
+            '{"name":"table2","id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/table-conflict.json"}'
         );
 
         $response = $this->client->send($request);
@@ -248,7 +248,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"name":{"type":"string"}},"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\table-conflict.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"name":{"type":"string"}},"id":"file:///home/martijn/Code/private-tables/raml/schema/table-conflict.json"}',
             (string) $response->getBody()
         );
         
@@ -263,7 +263,7 @@ class ApiTest extends PHPUnitTestCase
   'Accept' => 'application/json',
   'Content-Type' => 'application/json',
 ),
-            '{"name":"updatedtable","id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\table-update.json"}'
+            '{"name":"updatedtable","id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/table-update.json"}'
         );
 
         $response = $this->client->send($request);
@@ -278,7 +278,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":"string"}}},"required":["error"],"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\error.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":["string","object"]}}},"required":["error"],"id":"file:///home/martijn/Code/private-tables/raml/schema/error.json"}',
             (string) $response->getBody()
         );
         
@@ -327,7 +327,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":"string"}}},"required":["error"],"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\error.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":["string","object"]}}},"required":["error"],"id":"file:///home/martijn/Code/private-tables/raml/schema/error.json"}',
             (string) $response->getBody()
         );
         
@@ -356,7 +356,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http: //json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"tableId":{"type":"integer"},"name":{"type":"string"},"type":{"type":"string"},"length":{"type":["integer","null"]},"allowNull":{"type":"boolean"},"default":{"type":["string","null"]},"comment":{"type":["string","null"]},"isPrimaryKey":{"type":"boolean"},"autoIncrement":{"type":"boolean"}},"required":["id","tableId","name","type","length","allowNull","default","comment","isPrimaryKey","autoIncrement"]},"id":"file://C:\\\Development\\\Projects\\\php\\\Tables\\\raml\\\schema\\\fields.json"}',
+            '{"$schema":"http: //json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"tableId":{"type":"integer"},"name":{"type":"string"},"type":{"type":"string"},"length":{"type":["integer","null"]},"allowNull":{"type":"boolean"},"default":{"type":["string","null"]},"comment":{"type":["string","null"]},"isPrimaryKey":{"type":"boolean"},"autoIncrement":{"type":"boolean"}},"required":["id","tableId","name","type","length","allowNull","default","comment","isPrimaryKey","autoIncrement"]},"id":"file:///home/martijn/Code/private-tables/raml/schema/fields.json"}',
             (string) $response->getBody()
         );
         
@@ -370,7 +370,7 @@ class ApiTest extends PHPUnitTestCase
             array (
   'Content-Type' => 'application/json',
 ),
-            '{"name":"newfield","type":"STRING","length":null,"allowNull":false,"default":null,"comment":null,"isPrimaryKey":false,"autoIncrement":false,"id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\field-create.json"}'
+            '{"name":"newfield","type":"STRING","length":null,"allowNull":false,"default":null,"comment":null,"isPrimaryKey":false,"autoIncrement":false,"id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/field-create.json"}'
         );
 
         $response = $this->client->send($request);
@@ -404,7 +404,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testAddANewFieldConflict()
+    public function testAddANewFieldError()
     {
         $request = new Request(
             'POST',
@@ -412,7 +412,7 @@ class ApiTest extends PHPUnitTestCase
             array (
   'Content-Type' => 'application/json',
 ),
-            '{"name":"fieldname","type":"STRING","length":null,"allowNull":false,"default":null,"comment":null,"isPrimaryKey":false,"autoIncrement":false,"id":"file:\\/\\/C:\\\\Development\\\\Projects\\\\php\\\\Tables\\\\raml\\\\sample\\\\field-conflict.json"}'
+            '{"name":"fieldname","type":"STRING","length":null,"allowNull":false,"default":null,"comment":null,"isPrimaryKey":false,"autoIncrement":false,"id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/field-conflict.json"}'
         );
 
         $response = $this->client->send($request);
