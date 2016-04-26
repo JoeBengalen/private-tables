@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "type": "array",
+    "items": {
+        "action": {
+            "type": "string"
+        },
+        "method": {
+            "type": "string"
+        },
+        "pattern": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "action", "method", "pattern"
+    ]
+}

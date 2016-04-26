@@ -9,7 +9,9 @@ securitySchemes:
       description: HTTP Basic Authentication
 
 schemas:
+ - route-list: !include schema/route-list.json
  - error: !include schema/error.json
+ - method-not-allowed: !include schema/method-not-allowed.json
  - table: !include schema/table.json
  - tables: !include schema/tables.json
  - table-badrequest: !include schema/table-badrequest.json
@@ -146,3 +148,42 @@ resourceTypes:
             item: !include sample/field.json
             updateItem: !include sample/field-update.json
             conflictItem: !include sample/field-conflict.json
+/hello:
+  get:
+    description: Connection test
+    responses:
+      200:
+        body:
+          application/json
+/list:
+  get:
+    description: List available actions
+    responses:
+      200:
+        body:
+          application/json:
+            schema: route-list
+/error:
+  get:
+    description: Example
+    responses:
+      500:
+        body:
+          application/json:
+            schema: error
+  delete:
+    description: Example
+    responses:
+      405:
+        body:
+          application/json:
+            schema: method-not-allowed
+  /not-found:
+    get:
+      description: Example
+      responses:
+        404:
+          body:
+            application/json:
+              schema: error
+      
