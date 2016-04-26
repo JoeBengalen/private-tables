@@ -2,33 +2,23 @@
 
 namespace JoeBengalen\Tables\Api\Action\Index;
 
-use Aura\Filter\Exception\FilterFailed;
-use Exception;
 use InvalidArgumentException;
 use JoeBengalen\Assert\Assert;
 use JoeBengalen\Tables\Api\ApiResponder;
-use JoeBengalen\Tables\Api\Filter\IndexFilter;
-use JoeBengalen\Tables\Model\Exception\DuplicateEntity;
+use JoeBengalen\Tables\Api\Transformer\IndexTransformer;
 use JoeBengalen\Tables\Model\Exception\EntityNotFound;
 use JoeBengalen\Tables\Model\FieldRepository;
-use JoeBengalen\Tables\Model\Index;
 use JoeBengalen\Tables\Model\IndexRepository;
 use JoeBengalen\Tables\Model\TableRepository;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use Slim\Router;
 
-class CreateIndexAction
+class ListIndexesAction
 {
     /**
      * @var ApiResponder
      */
     protected $responder;
-
-    /**
-     * @var IndexFilter
-     */
-    protected $indexFilter;
 
     /**
      * @var TableRepository
@@ -46,34 +36,32 @@ class CreateIndexAction
     protected $indexRepository;
 
     /**
-     * @var Router
+     * @var IndexTransformer
      */
-    protected $router;
+
+    protected $indexTransformer;
 
     /**
-     * CreateIndexAction.
+     * ListIndexesAction.
      *
-     * @param ApiResponder    $responder
-     * @param IndexFilter     $indexFilter
-     * @param TableRepository $tableRepository
-     * @param FieldRepository $fieldRepository
-     * @param IndexRepository $indexRepository
-     * @param Router          $router
+     * @param ApiResponder     $responder
+     * @param TableRepository  $tableRepository
+     * @param FieldRepository  $fieldRepository
+     * @param IndexRepository  $indexRepository
+     * @param IndexTransformer $indexTransformer
      */
     public function __construct(
         ApiResponder $responder,
-        IndexFilter $indexFilter,
         TableRepository $tableRepository,
         FieldRepository $fieldRepository,
         IndexRepository $indexRepository,
-        Router $router
+        IndexTransformer $indexTransformer
     ) {
         $this->responder = $responder;
-        $this->indexFilter = $indexFilter;
         $this->tableRepository = $tableRepository;
         $this->fieldRepository = $fieldRepository;
         $this->indexRepository = $indexRepository;
-        $this->router = $router;
+        $this->indexTransformer = $indexTransformer;
     }
 
     /**
@@ -98,9 +86,6 @@ class CreateIndexAction
         Assert::isNumeric($fieldId);
 
         try {
-            $body = (array) $request->getParsedBody();
-            $this->indexFilter->assert($body);
-
             $table = $this->tableRepository->getTableById($tableId);
             $field = $this->fieldRepository->getFieldById($fieldId);
 
@@ -108,34 +93,13 @@ class CreateIndexAction
                 return $this->responder->notFound($response);
             }
 
-            $index = new Index(
-                null,
-                $field->getId(),
-                $body['name'],
-                $body['unique']
-            );
+            $indexCollection = $this->indexRepository->getIndexesByField($field);
+            $data = $this->indexTransformer->collection($indexCollection);
 
-            $indexId = $this->indexRepository->addIndex($index);
+            return $this->responder->collection($response, $data);
 
-            $path = $this->router->pathFor('getIndex', [
-                'tableId' => $table->getId(),
-                'fieldId' => $field->getId(),
-                'indexId' => $indexId,
-            ]);
-            $location = $request->getUri()
-                    ->withPath($path)
-                    ->withQuery('')
-                    ->withFragment('');
-
-            return $this->responder->created($response, (string) $location);
-
-        } catch (FilterFailed $filterFailed) {
-            $failures = $filterFailed->getFailures();
-            return $this->responder->notValid($response, $failures);
         } catch (EntityNotFound $entityNotFound) {
             return $this->responder->notFound($response);
-        } catch (DuplicateEntity $duplicateEntity) {
-            return $this->responder->duplicate($response, $duplicateEntity);
         } catch (Exception $exception) {
             return $this->responder->error($response, $exception);
         }

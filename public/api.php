@@ -12,6 +12,8 @@ use JoeBengalen\Tables\Api\Action\Field\GetFieldAction;
 use JoeBengalen\Tables\Api\Action\Field\ListFieldsAction;
 use JoeBengalen\Tables\Api\Action\Field\UpdateFieldAction;
 use JoeBengalen\Tables\Api\Action\HelloAction;
+use JoeBengalen\Tables\Api\Action\Index\CreateIndexAction;
+use JoeBengalen\Tables\Api\Action\Index\ListIndexesAction;
 use JoeBengalen\Tables\Api\Action\ListAction;
 use JoeBengalen\Tables\Api\Action\Table\CreateTableAction;
 use JoeBengalen\Tables\Api\Action\Table\DeleteTableAction;

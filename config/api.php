@@ -9,6 +9,7 @@ use JoeBengalen\Tables\Api\Action\Error\NotAllowedAction;
 use JoeBengalen\Tables\Api\Action\Error\NotFoundAction;
 use JoeBengalen\Tables\Api\Action\Error\PhpErrorAction;
 use JoeBengalen\Tables\Api\Filter\FieldFilter;
+use JoeBengalen\Tables\Api\Filter\IndexFilter;
 use JoeBengalen\Tables\Api\Filter\TableFilter;
 use Slim\Router;
 use function DI\factory;
@@ -35,6 +36,7 @@ return [
 
     TableFilter::class => $filterFactory,
     FieldFilter::class => $filterFactory,
+    IndexFilter::class => $filterFactory,
 
     Router::class => get('router'),
 

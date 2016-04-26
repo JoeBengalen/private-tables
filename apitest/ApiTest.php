@@ -528,7 +528,7 @@ class ApiTest extends PHPUnitTestCase
         );
         
                 $this->assertJsonMatchesSchema(
-            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"name":{"type":"array","items":{"type":"string"}}},"id":"file:///home/martijn/Code/private-tables/raml/schema/field-badrequest.json"}',
+            '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"name":{"type":"array","items":{"type":"string"}},"type":{"type":"array","items":{"type":"string"}},"allowNull":{"type":"array","items":{"type":"string"}},"isPrimaryKey":{"type":"array","items":{"type":"string"}},"autoIncrement":{"type":"array","items":{"type":"string"}}},"id":"file:///home/martijn/Code/private-tables/raml/schema/field-badrequest.json"}',
             (string) $response->getBody()
         );
         
@@ -640,6 +640,98 @@ class ApiTest extends PHPUnitTestCase
             '{"$schema":"http://json-schema.org/draft-04/schema","type":"object","properties":{"error":{"type":"string"},"details":{"type":"array","items":{"type":["string","object"]}}},"required":["error"],"id":"file:///home/martijn/Code/private-tables/raml/schema/error.json"}',
             (string) $response->getBody()
         );
+        
+    }
+
+    public function testGetAListOfIndexes()
+    {
+        $request = new Request(
+            'GET',
+            'http://admin:Admin!23@localhost:8000/api/v1/tables/1/fields/1/indexes',
+            array (
+  'Accept' => 'application/json',
+),
+            NULL
+        );
+
+        $response = $this->client->send($request);
+
+        RequestResponseLogger::logRequestResponse(__FUNCTION__, $request, $response);
+
+        $this->assertSame(200, $response->getStatusCode());
+
+                $this->assertContentType(
+            'application/json',
+            $response->getHeaderLine('Content-Type')
+        );
+        
+                $this->assertJsonMatchesSchema(
+            '{"$schema":"http: //json-schema.org/draft-04/schema#","type":"array","items":{"type":"object","properties":{"id":{"type":"integer"},"fieldId":{"type":"integer"},"name":{"type":"string"},"unique":{"type":"boolean"}},"required":["id","fieldId","name","unique"]},"id":"file:///home/martijn/Code/private-tables/raml/schema/indexes.json"}',
+            (string) $response->getBody()
+        );
+        
+    }
+
+    public function testAddANewIndex()
+    {
+        $request = new Request(
+            'POST',
+            'http://admin:Admin!23@localhost:8000/api/v1/tables/1/fields/1/indexes',
+            array (
+  'Content-Type' => 'application/json',
+),
+            '{"name":"newindex","unique":true,"id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/index-create.json"}'
+        );
+
+        $response = $this->client->send($request);
+
+        RequestResponseLogger::logRequestResponse(__FUNCTION__, $request, $response);
+
+        $this->assertSame(201, $response->getStatusCode());
+
+        
+        
+    }
+
+    public function testAddANewIndexBadRequest()
+    {
+        $request = new Request(
+            'POST',
+            'http://admin:Admin!23@localhost:8000/api/v1/tables/1/fields/1/indexes',
+            array (
+  'Content-Type' => 'application/json',
+),
+            '{}'
+        );
+
+        $response = $this->client->send($request);
+
+        RequestResponseLogger::logRequestResponse(__FUNCTION__, $request, $response);
+
+        $this->assertSame(400, $response->getStatusCode());
+
+        
+        
+    }
+
+    public function testAddANewIndexError()
+    {
+        $request = new Request(
+            'POST',
+            'http://admin:Admin!23@localhost:8000/api/v1/tables/1/fields/1/indexes',
+            array (
+  'Content-Type' => 'application/json',
+),
+            '{"name":"index2","unique":true,"id":"file:\\/\\/\\/home\\/martijn\\/Code\\/private-tables\\/raml\\/sample\\/index-conflict.json"}'
+        );
+
+        $response = $this->client->send($request);
+
+        RequestResponseLogger::logRequestResponse(__FUNCTION__, $request, $response);
+
+        $this->assertSame(409, $response->getStatusCode());
+
+        
         
     }
 

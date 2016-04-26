@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "fieldId": 1,
+        "name": "index1",
+        "unique": true
+    },
+    {
+        "id": 2,
+        "fieldId": 3,
+        "name": "index2",
+        "unique": false
+    }
+]

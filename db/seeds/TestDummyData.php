@@ -40,5 +40,20 @@ class TestDummyData extends AbstractSeed
                 'length' => 255,
             ]
         ]);
+
+        $this->insert('index', [
+            [
+                'id' => 1,
+                'fieldId' => 1,
+                'name' => 'index1',
+                'unique' => true,
+            ],
+            [
+                'id' => 2,
+                'fieldId' => 1,
+                'name' => 'index2',
+                'unique' => false,
+            ]
+        ]);
     }
 }

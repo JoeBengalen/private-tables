@@ -20,6 +20,10 @@ schemas:
  - fields: !include schema/fields.json
  - field-badrequest: !include schema/field-badrequest.json
  - field-conflict: !include schema/field-conflict.json
+ - index: !include schema/index.json
+ - indexes: !include schema/indexes.json
+ - index-badrequest: !include schema/index-badrequest.json
+ - index-conflict: !include schema/index-conflict.json
 
 resourceTypes:
   - collection:
@@ -148,6 +152,13 @@ resourceTypes:
             item: !include sample/field.json
             updateItem: !include sample/field-update.json
             conflictItem: !include sample/field-conflict.json
+        /indexes:
+          type:
+            collection:
+              collection: !include sample/indexes.json
+              createItem: !include sample/index-create.json
+              conflictItem: !include sample/index-conflict.json
+
 /hello:
   get:
     description: Connection test
