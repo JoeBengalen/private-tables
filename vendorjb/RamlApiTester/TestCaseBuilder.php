@@ -276,8 +276,8 @@ class TestCaseBuilder
     protected function createDeleteCases(WrappedResource $resource, Method $method)
     {
         $uris = $this->createResourceUris($resource);
-        $delUri = $uris[2];
-        $notFoundUrl = $uris[1];
+        $delUri = $uris[2] ?? $uris[0] ?? '';
+        $notFoundUrl = $uris[1] ?? $uris[0] ?? '';
 
         foreach ($method->getResponses() as $response) {
             if (empty($response->getBodies())) {

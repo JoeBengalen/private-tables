@@ -86,8 +86,13 @@ class TestCaseGenerator
             case 404:
                 $suffix = ' not found';
                 break;
+            case 405:
+                $suffix = ' method not allowed';
+                break;
             case 409:
                 $suffix = ' conflict';
+            case 500:
+                $suffix = ' error';
                 break;
         }
 
