@@ -135,7 +135,7 @@ class TestCaseBuilder
 
         foreach ($method->getResponses() as $response) {
             if (empty($response->getBodies())) {
-                $testCase = new Testcase();
+                $testCase = new TestCase();
                 $testCase->request = new Request();
                 $testCase->response = new Response();
 
@@ -155,7 +155,7 @@ class TestCaseBuilder
 
             foreach ($response->getBodies() as $responseBody) {
 
-                $testCase = new Testcase();
+                $testCase = new TestCase();
                 $testCase->request = new Request();
                 $testCase->response = new Response();
 
@@ -223,7 +223,7 @@ class TestCaseBuilder
                 $url = $response->getStatusCode() === 404 ? $nokUri : $okUri;
 
                 if (empty($response->getBodies())) {
-                    $testCase = new Testcase();
+                    $testCase = new TestCase();
                     $testCase->request = new Request();
                     $testCase->response = new Response();
 
@@ -246,7 +246,7 @@ class TestCaseBuilder
 
                 foreach ($response->getBodies() as $responseBody) {
 
-                    $testCase = new Testcase();
+                    $testCase = new TestCase();
                     $testCase->request = new Request();
                     $testCase->response = new Response();
 
@@ -281,7 +281,7 @@ class TestCaseBuilder
 
         foreach ($method->getResponses() as $response) {
             if (empty($response->getBodies())) {
-                $testCase = new Testcase();
+                $testCase = new TestCase();
                 $testCase->request = new Request();
                 $testCase->response = new Response();
 
@@ -301,7 +301,7 @@ class TestCaseBuilder
 
             foreach ($response->getBodies() as $responseBody) {
 
-                $testCase = new Testcase();
+                $testCase = new TestCase();
                 $testCase->request = new Request();
                 $testCase->response = new Response();
 
@@ -327,10 +327,6 @@ class TestCaseBuilder
     public function build()
     {
         $this->extractResources($this->api->getResources());
-        
-        //var_dump($this->resources);
-
-
 
         foreach ($this->resources as $resource) {
             foreach ($resource->getResource()->getMethods() as $method) {
