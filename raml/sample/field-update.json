@@ -1,0 +1,10 @@
+{
+    "name": "updatedfield",
+    "type": "INTEGER",
+    "length": 4,
+    "allowNull": false,
+    "default": null,
+    "comment": "some test comment",
+    "isPrimaryKey": false,
+    "autoIncrement": true
+}

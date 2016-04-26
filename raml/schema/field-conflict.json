@@ -3,10 +3,7 @@
     "type": "object",
     "properties": {
         "name": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
+            "type": "string"
         }
     }
-} 
+}

@@ -135,3 +135,14 @@ resourceTypes:
           collection: !include sample/fields.json
           createItem: !include sample/field-create.json
           conflictItem: !include sample/field-conflict.json
+      /{fieldId}:
+        securedBy: [ basic ]
+        uriParameters:
+          fieldId:
+            type: integer
+            examples: [ 1, 99999, 2 ]
+        type:
+          item:
+            item: !include sample/field.json
+            updateItem: !include sample/field-update.json
+            conflictItem: !include sample/field-conflict.json
