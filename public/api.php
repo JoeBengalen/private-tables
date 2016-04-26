@@ -5,6 +5,7 @@ use JoeBengalen\HttpRest\RestParamsMiddleware;
 use JoeBengalen\SlimCompress\GzipCompressionMiddleware;
 use JoeBengalen\SlimEnvelope\EnvelopeMiddleware;
 use JoeBengalen\SlimJsonp\JsonpMiddleware;
+use JoeBengalen\Tables\Api\Action\ErrorAction;
 use JoeBengalen\Tables\Api\Action\Field\CreateFieldAction;
 use JoeBengalen\Tables\Api\Action\Field\DeleteFieldAction;
 use JoeBengalen\Tables\Api\Action\Field\GetFieldAction;
@@ -36,8 +37,9 @@ $app->add(BasicAuthenticationMiddleware::class);
 $app->add(GzipCompressionMiddleware::class);
 
 $app->group('/api/v1', function () {
-    $this->get('/hello', HelloAction::class)->setName('hello');
-    $this->get('/list', ListAction::class)->setName('list');
+    $this->get('/hello', HelloAction::class)->setName('testConnection');
+    $this->get('/list', ListAction::class)->setName('listActions');
+    $this->get('/error', ErrorAction::class)->setName('errorExample');
 
     $this->get('/test/authentication', AuthenticationAction::class)->setName('testAuthentication');
     $this->get('/test/compress', CompressAction::class)->setName('testCompression');
