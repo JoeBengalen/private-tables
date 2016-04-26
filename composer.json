@@ -11,10 +11,10 @@
         }
     ],
     "require": {
-        "php": "^5.5",
+        "php": "^5.5|^7.0",
         "php-di/php-di": "^5.2",
         "php-di/slim-bridge": "^1.0",
-        "joebengalen/assert": "^1.0",
+        "joebengalen/assert": "dev-master",
         "aura/filter": "^2.2",
         "aura/sql": "^2.4",
         "robmorgan/phinx": "^0.5.3"
