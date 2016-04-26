@@ -8,6 +8,6 @@ require 'api.php';
 $data = xdebug_get_code_coverage();
 xdebug_stop_code_coverage();
 
-$dir = dirname(__DIR__) . '/apitest/_coverage/';
+$dir = dirname(__DIR__) . '/apitest/tmp/';
 $fullPath = $dir . md5(uniqid(rand(), TRUE)) . '.coverage';
 file_put_contents($fullPath, serialize($data));

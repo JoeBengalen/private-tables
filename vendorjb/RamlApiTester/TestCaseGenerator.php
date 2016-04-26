@@ -153,7 +153,7 @@ class TestCaseGenerator
     protected function buildSetUpMethod()
     {
         $setUpBody = <<<EOT
-        RequestResponseLogger::setTargetDir('{$this->target}_out/');
+        RequestResponseLogger::setTargetDir('{$this->target}logging/');
 
         \$this->client = new Client([
             'http_errors' => false,

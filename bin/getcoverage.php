@@ -1,6 +1,6 @@
 <?php
 
-$coverageDirectory = dirname(__DIR__) . '/apitest/_coverage/';
+$coverageDirectory = dirname(__DIR__) . '/apitest/tmp/';
 $coverageExtension = '.coverage';
 
 $facade = new File_Iterator_Facade;

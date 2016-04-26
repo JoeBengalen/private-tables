@@ -11,5 +11,7 @@ node_modules
 tests
 phpunit
 db/data
-apitest/_coverage
-apitest/_out
+apitest/testdox.txt
+apitest/coverage/
+apitest/tmp/
+apitest/logging/

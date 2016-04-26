@@ -16,7 +16,7 @@ class ApiTest extends PHPUnitTestCase
 
     public function setUp()
     {
-        RequestResponseLogger::setTargetDir('/home/martijn/Code/private-tables/apitest/_out/');
+        RequestResponseLogger::setTargetDir('/home/martijn/Code/private-tables/apitest/logging/');
 
         $this->client = new Client([
             'http_errors' => false,
