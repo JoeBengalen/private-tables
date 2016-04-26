@@ -94,7 +94,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testAddANewTableError()
+    public function testAddANewTableConflict()
     {
         $request = new Request(
             'POST',
@@ -224,7 +224,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testUpdateATableByItsTableIdError()
+    public function testUpdateATableByItsTableIdConflict()
     {
         $request = new Request(
             'PUT',
@@ -404,7 +404,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testAddANewFieldError()
+    public function testAddANewFieldConflict()
     {
         $request = new Request(
             'POST',
@@ -534,7 +534,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testUpdateAFieldByItsFieldIdError()
+    public function testUpdateAFieldByItsFieldIdConflict()
     {
         $request = new Request(
             'PUT',
@@ -714,7 +714,7 @@ class ApiTest extends PHPUnitTestCase
         
     }
 
-    public function testAddANewIndexError()
+    public function testAddANewIndexConflict()
     {
         $request = new Request(
             'POST',

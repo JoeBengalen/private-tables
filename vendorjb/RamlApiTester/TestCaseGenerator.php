@@ -91,6 +91,7 @@ class TestCaseGenerator
                 break;
             case 409:
                 $suffix = ' conflict';
+                break;
             case 500:
                 $suffix = ' error';
                 break;
