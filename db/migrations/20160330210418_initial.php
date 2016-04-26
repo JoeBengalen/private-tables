@@ -31,7 +31,7 @@ class Initial extends AbstractMigration
                 ->addColumn('fieldId', 'integer')
                 ->addColumn('name', 'string', ['length' => 255])
                 ->addColumn('unique', 'boolean')
-                ->addForeignKey('tableId', 'field', 'id')
+                ->addForeignKey('fieldId', 'field', 'id')
                 ->create();
 
         $this->table('foreignKey')
@@ -39,7 +39,7 @@ class Initial extends AbstractMigration
                 ->addColumn('referencedFieldId', 'integer')
                 ->addColumn('onUpdate', 'string', ['length' => 10])
                 ->addColumn('onDelete', 'string', ['length' => 10])
-                ->addForeignKey('tableId', 'field', 'id')
+                ->addForeignKey('fieldId', 'field', 'id')
                 ->addForeignKey('referencedFieldId', 'field', 'id')
                 ->create();
     }
